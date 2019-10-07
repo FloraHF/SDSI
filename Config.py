@@ -19,11 +19,10 @@ class Config(object):
     ###============ learning params =========
     LEARNING_RATE = 0.01
     LAYER_SIZES = [30, 6, 30]
-#    ACT_FUNCS = [tf.nn.tanh, tf.nn.tanh, tf.nn.tanh]
+    ACT_FUNCS = [tf.nn.tanh, tf.nn.tanh, tf.nn.tanh]
     TAU = 0.01
     MAX_BUFFER_SIZE = 10000
     BATCH_SIZE = 1000
-    FIT_STEPS = 88
     TRAIN_STEPS = 100
     TARGET_UPDATE_INTERVAL = 1
 
