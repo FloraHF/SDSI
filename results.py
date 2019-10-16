@@ -2,37 +2,30 @@ import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 import numpy as np
-from math import pi, acos
+from math import pi, cos, sin
 
 from Config import Config
 from SDSIgame import SDSIGame
 from vcontour import tangent
-from plotter import plot_vcontour, plot_traj, plot_constd
-
-#ss = []
-#colors = ['g', 'c', 'b']
-#for R in Rs:
-#    ss.append(const_v(R))
-#plot_vcontour(ss, Rs, colors=colors, drs=[True, False, False])
+from plotter import plot_vcontour, plot_traj, plot_constd, plot_dr
 
 r = Config.CAP_RANGE
 R = Config.TAG_RANGE
 a = Config.VD/Config.VI
 
+rs   = [1.6,  1.9]
+thts = [pi/2, -pi/8]
+ri   = 2
+thti = pi/4
+xds = []
+for r, tht in zip(rs, thts):
+	xds.append(R*r*np.array([cos(tht), sin(tht)]))
+xi = R*ri*np.array([cos(thti), sin(thti)])
+
 fig, ax = plt.subplots()
-Rs = np.linspace(0.8*R, 1.8*R, 3)
-plot_constd(ax, 2*R, Rs)
+plot_vcontour(ax, xds, 0, color='k')
+plot_dr(ax, xi, xds)
+ax.axis('equal')
+plt.grid()
 plt.show()
 
-# game = SDSIGame()
-# game.reset()
-# xs = game.advance(100)
-
-# fig, ax = plt.subplots()
-# plot_vcontour(ax, xs[0][1], game.Rmin)
-# plot_traj(ax, xs, game.Rmin)
-
-# k = 2
-# ax.axis('equal')
-# plt.grid()
-# plt.savefig('test.png')   
