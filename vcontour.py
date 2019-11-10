@@ -17,19 +17,23 @@ def dominant_region(x, xi, xds):
     return inDR
 
 def target(x, R=Config.TAG_RANGE):
-    return sqrt(x[0]**2 + x[1]**2) - R
+    # return sqrt(x[0]**2 + x[1]**2) - R
+    return x[1]
 
 def tangent(xi, xds):
     def dr(x, xi=xi, xds=xds):
         return dominant_region(x, xi, xds)
     def target_square(x):
-        return x[0]**2 + x[1]**2
+        # return x[0]**2 + x[1]**2
+        return x[1]
     on_dr = NonlinearConstraint(dr, -np.inf, 0)
     sol = minimize(target_square, xi, constraints=(on_dr,))
-    return sol.x, sqrt(target_square(sol.x)), np.linalg.norm(sol.x - xi)/Config.VI
+    # return sol.x, sqrt(target_square(sol.x)), np.linalg.norm(sol.x - xi)/Config.VI?
+    return sol.x, target_square(sol.x), np.linalg.norm(sol.x - xi)/Config.VI
 
 def min_dist_to_target(xi, xds):
-    return tangent(xi, xds)[1] - Config.TAG_RANGE
+    # return tangent(xi, xds)[1] - Config.TAG_RANGE
+    return tangent(xi, xds)[1]
 
 def time_to_cap(xi, xds):
     return tangent(xi, xds)[2]
